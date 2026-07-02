@@ -42,6 +42,12 @@ cd "$DIR"
 echo "=== Semrush SERVER SETUP ==="
 echo "Folder: $DIR | Port: $PORT | Multi-domain: same port"
 
+# aaPanel folders are often owned by www-data; root git pull needs this once
+git config --global --add safe.directory "$DIR" 2>/dev/null || true
+if [ -d .git ]; then
+  git pull --ff-only 2>/dev/null && echo "Git pull OK" || echo "WARN: git pull skipped (run: git config --global --add safe.directory $DIR)"
+fi
+
 systemctl stop "$SERVICE" 2>/dev/null || true
 systemctl reset-failed "$SERVICE" 2>/dev/null || true
 kill_port_holders
