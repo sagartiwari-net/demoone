@@ -50,7 +50,7 @@ chmod +x reset-server.sh
 ### Update after git pull
 
 ```bash
-cd /www/wwwroot/toolcookies.com/sem
+cd /www/wwwroot/toolsmandi.com/semr
 git pull
 ./reset-server.sh
 ```
