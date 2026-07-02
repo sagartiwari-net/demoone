@@ -1,8 +1,8 @@
 #!/bin/bash
-# Server setup — run on server inside /www/wwwroot/toolcookies.com/sem
+# Server setup — run on server inside /www/wwwroot/toolsmandi.com/semr
 set -e
 
-DIR="/www/wwwroot/toolcookies.com/sem"
+DIR="/www/wwwroot/toolsmandi.com/semr"
 PORT="7850"
 BIN="semrush-go-proxy"
 BUILD_TAG="semrush-multi-v1"

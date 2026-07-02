@@ -5,9 +5,9 @@ After=network.target mysql.service
 [Service]
 Type=simple
 User=root
-WorkingDirectory=/www/wwwroot/toolcookies.com/sem
+WorkingDirectory=/www/wwwroot/toolsmandi.com/semr
 ExecStartPre=/bin/bash -c 'fuser -k 7850/tcp 2>/dev/null || true; sleep 2'
-ExecStart=/www/wwwroot/toolcookies.com/sem/semrush-go-proxy
+ExecStart=/www/wwwroot/toolsmandi.com/semr/semrush-go-proxy
 Restart=on-failure
 RestartSec=10
 StandardOutput=journal

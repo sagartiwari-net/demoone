@@ -27,7 +27,7 @@ Open: http://127.0.0.1:7851 (uses `cookie.txt`, no MySQL auth)
 
 | Field | Value |
 |-------|--------|
-| Folder | `/www/wwwroot/toolcookies.com/sem` |
+| Folder | `/www/wwwroot/toolsmandi.com/semr` |
 | Port | **7850** |
 | Service | `semrush-go-proxy` |
 | DB | `toolsmandirefct` (shared ToolsMandi) |
@@ -35,8 +35,8 @@ Open: http://127.0.0.1:7851 (uses `cookie.txt`, no MySQL auth)
 ### First-time setup
 
 ```bash
-mkdir -p /www/wwwroot/toolcookies.com/sem
-cd /www/wwwroot/toolcookies.com/sem
+mkdir -p /www/wwwroot/toolsmandi.com/semr
+cd /www/wwwroot/toolsmandi.com/semr
 git clone https://github.com/sagartiwari-net/demoone.git .
 ```
 

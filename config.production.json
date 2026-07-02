@@ -1,7 +1,7 @@
 {
   "port": "7850",
   "target_url": "https://www.semrush.com",
-  "public_host": "sem.toolcookies.com",
+  "public_host": "semr.toolsmandi.com",
   "public_scheme": "https",
   "user_agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/149.0.0.0 Safari/537.36",
   "website_id": 0,
