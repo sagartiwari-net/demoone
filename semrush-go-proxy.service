@@ -1,0 +1,22 @@
+[Unit]
+Description=Semrush Go Proxy (ToolsMandi multi-domain)
+After=network.target mysql.service
+
+[Service]
+Type=simple
+User=root
+WorkingDirectory=/www/wwwroot/toolcookies.com/sem
+ExecStartPre=/bin/bash -c 'fuser -k 7850/tcp 2>/dev/null || true; sleep 2'
+ExecStart=/www/wwwroot/toolcookies.com/sem/semrush-go-proxy
+Restart=on-failure
+RestartSec=10
+StandardOutput=journal
+StandardError=journal
+SyslogIdentifier=semrush-go-proxy
+LimitNOFILE=65536
+KillMode=control-group
+TimeoutStopSec=15
+Environment=CONFIG_FILE=config.json
+
+[Install]
+WantedBy=multi-user.target

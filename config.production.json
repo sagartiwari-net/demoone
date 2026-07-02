@@ -1,0 +1,17 @@
+{
+  "port": "7850",
+  "target_url": "https://www.semrush.com",
+  "public_host": "sem.toolcookies.com",
+  "public_scheme": "https",
+  "user_agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/149.0.0.0 Safari/537.36",
+  "website_id": 0,
+  "cookie_file": "cookie.txt",
+  "local_test_mode": false,
+  "bind_localhost": false,
+  "debug_logging": false,
+  "mysql_host": "127.0.0.1",
+  "mysql_port": "3306",
+  "mysql_user": "toolsmandirefct",
+  "mysql_password": "CHANGE_ME_ON_SERVER",
+  "mysql_db": "toolsmandirefct"
+}

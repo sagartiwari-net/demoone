@@ -1,0 +1,17 @@
+{
+  "port": "7851",
+  "target_url": "https://www.semrush.com",
+  "public_host": "127.0.0.1:7851",
+  "public_scheme": "http",
+  "user_agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/149.0.0.0 Safari/537.36",
+  "website_id": 3,
+  "cookie_file": "cookie.txt",
+  "local_test_mode": true,
+  "bind_localhost": true,
+  "debug_logging": true,
+  "mysql_host": "",
+  "mysql_port": "3306",
+  "mysql_user": "",
+  "mysql_password": "",
+  "mysql_db": ""
+}
