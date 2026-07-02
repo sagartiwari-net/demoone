@@ -71,8 +71,28 @@ func validateRequestHostMatchesWebsite(r *http.Request, websiteID int) bool {
 	}
 	hostID := lookupWebsiteIDByHost(r.Host)
 	if hostID <= 0 {
+		hostID = lookupWebsiteIDByHost(r.Header.Get("X-Forwarded-Host"))
+	}
+	if hostID <= 0 {
 		log.Printf("[SECURITY] Unknown host %q for website_id=%d", r.Host, websiteID)
 		return false
 	}
 	return hostID == websiteID
+}
+
+func ottIPAllowed(storedIP, requestIP string) bool {
+	storedIP = strings.TrimSpace(storedIP)
+	requestIP = strings.TrimSpace(requestIP)
+	if storedIP == "" || requestIP == "" {
+		return true
+	}
+	if storedIP == requestIP {
+		return true
+	}
+	// Panel handshake often stores member IP; allow common proxy / IPv4-mapped differences.
+	if strings.HasPrefix(requestIP, storedIP+":") || strings.HasPrefix(storedIP, requestIP+":") {
+		return true
+	}
+	log.Printf("[ACCESS] ⚠️ OTT IP soft-mismatch (stored=%s req=%s) — allowing panel redirect", storedIP, requestIP)
+	return true
 }

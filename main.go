@@ -1690,32 +1690,37 @@ func main() {
 			// Dynamically synchronize the website_id from the authorized token
 			accessWebsiteID := tokenWebsiteID
 
-			// Delete OTT
-			_, _ = db.Exec("DELETE FROM ahrefs_tokens WHERE id = ?", tokenID)
-
 			if time.Now().After(expiresAt) {
 				log.Printf("[ACCESS] ❌ Expired OTT for user: %s (expired at %v)", username, expiresAt)
+				_, _ = db.Exec("DELETE FROM ahrefs_tokens WHERE id = ?", tokenID)
 				renderAccessDeniedPage(w)
 				return
 			}
 
-			if storedUsername != username {
+			if !strings.EqualFold(strings.TrimSpace(storedUsername), strings.TrimSpace(username)) {
 				log.Printf("[ACCESS] ❌ Username mismatch: token was for '%s', got '%s'", storedUsername, username)
+				_, _ = db.Exec("DELETE FROM ahrefs_tokens WHERE id = ?", tokenID)
 				renderAccessDeniedPage(w)
 				return
 			}
 
 			if !validateRequestHostMatchesWebsite(r, tokenWebsiteID) {
-				log.Printf("[ACCESS] ❌ Host/domain mismatch for website_id=%d host=%s", tokenWebsiteID, r.Host)
+				log.Printf("[ACCESS] ❌ Host/domain mismatch for website_id=%d host=%s fwd=%s", tokenWebsiteID, r.Host, r.Header.Get("X-Forwarded-Host"))
+				_, _ = db.Exec("DELETE FROM ahrefs_tokens WHERE id = ?", tokenID)
 				renderAccessDeniedPage(w)
 				return
 			}
 
-			if storedIP != "" && storedIP != realClientIP(r) {
-				log.Printf("[ACCESS] ❌ OTT IP mismatch for user %s (stored=%s got=%s)", username, storedIP, realClientIP(r))
+			clientIP := realClientIP(r)
+			if !ottIPAllowed(storedIP, clientIP) {
+				log.Printf("[ACCESS] ❌ OTT IP rejected for user %s (stored=%s got=%s)", username, storedIP, clientIP)
+				_, _ = db.Exec("DELETE FROM ahrefs_tokens WHERE id = ?", tokenID)
 				renderAccessDeniedPage(w)
 				return
 			}
+
+			// Delete OTT only after all checks pass (refresh-safe until success)
+			_, _ = db.Exec("DELETE FROM ahrefs_tokens WHERE id = ?", tokenID)
 
 			// Automatically expire custom limits that have passed their expiration date
 			_, _ = db.Exec(`
@@ -1755,7 +1760,7 @@ func main() {
 
 			_, err = db.Exec(
 				"INSERT INTO ahrefs_sessions (session_token, username, client_ip, expires_at, website_id, assigned_account_id) VALUES (?, ?, ?, ?, ?, ?)",
-				sessionToken, username, realClientIP(r), sessionExpires, accessWebsiteID, assignedAccountID,
+				sessionToken, storedUsername, clientIP, sessionExpires, accessWebsiteID, assignedAccountID,
 			)
 			if err != nil {
 				log.Printf("[ACCESS] ❌ DB Error inserting session: %v", err)
@@ -1772,7 +1777,7 @@ func main() {
 				Path:     "/",
 				Expires:  sessionExpires,
 				HttpOnly: true,
-				Secure:   cfg.PublicScheme == "https",
+				Secure:   r.TLS != nil || strings.EqualFold(r.Header.Get("X-Forwarded-Proto"), "https"),
 				SameSite: http.SameSiteLaxMode,
 			})
 
