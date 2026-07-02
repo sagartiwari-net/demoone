@@ -66,7 +66,11 @@ fi
 echo "=== Build ==="
 go mod tidy
 go mod download
-CGO_ENABLED=0 go build -ldflags="-s -w" -o "$BIN" .
+CGO_ENABLED=0 go build -buildvcs=false -ldflags="-s -w" -o "$BIN" .
+if [ ! -x "$BIN" ]; then
+  echo "ERROR: build failed — binary $BIN not created"
+  exit 1
+fi
 chmod +x "$BIN"
 file "$BIN"
 

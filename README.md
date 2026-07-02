@@ -23,6 +23,8 @@ cd semrush-new-go-proxy
 
 Open: http://127.0.0.1:7851 (uses `cookie.txt`, no MySQL auth)
 
+**Server par Node.js ki zaroorat nahi** — sirf Go binary chalti hai. `export-tool.js` HTML mein inject hoti hai.
+
 ## Server deploy
 
 | Field | Value |
