@@ -1,0 +1,113 @@
+{
+  "manifest_version": 3,
+  "name": "Helium 10 for Amazon Sellers, Influencers, and Walmart Sellers",
+  "short_name": "Helium 10",
+  "description": "Unlock product research, keyword insights, profit analysis to boost your Amazon, Walmart, TikTok sales! For sellers & influencers.",
+  "version": "8.34.1",
+  "version_name": "8.34.1",
+  "author": "Helium10 <support@helium10.com>",
+  "default_locale": "en",
+  "icons": {
+    "16": "icon/16.png",
+    "32": "icon/32.png",
+    "48": "icon/48.png",
+    "128": "icon/128.png"
+  },
+  "background": {
+    "service_worker": "background-script.js",
+    "type": "module"
+  },
+  "action": {
+    "default_icon": {
+      "16": "icon/16-off.png",
+      "48": "icon/48.png"
+    },
+    "default_title": "Helium 10",
+    "default_popup": "popup.html"
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "*://*.helium-dev.com/*",
+        "*://*.helium10-dev.com/*",
+        "*://*.helium10.com/*",
+        "*://*.helium-staging.com/*",
+        "*://__H10_PROXY_HOST__/*",
+        "http://127.0.0.1/*",
+        "http://localhost/*"
+      ],
+      "css": [],
+      "js": [
+        "vendors.js",
+        "helium-script.js",
+        "clear-refresh-bar.js"
+      ],
+      "run_at": "document_end",
+      "all_frames": false
+    },
+    {
+      "matches": [
+        "*://*.amazon.com/*",
+        "*://*.amazon.ca/*",
+        "*://*.amazon.com.mx/*",
+        "*://*.amazon.de/*",
+        "*://*.amazon.es/*",
+        "*://*.amazon.it/*",
+        "*://*.amazon.fr/*",
+        "*://*.amazon.co.uk/*",
+        "*://*.amazon.nl/*",
+        "*://*.amazon.in/*",
+        "*://*.amazon.com.au/*",
+        "*://*.amazon.co.jp/*",
+        "*://*.amazon.com.br/*",
+        "*://*.amazon.ae/*",
+        "*://*.amazon.sa/*"
+      ],
+      "css": [],
+      "js": [
+        "vendors.js",
+        "amazon-script.js"
+      ],
+      "run_at": "document_end",
+      "all_frames": false
+    },
+    {
+      "matches": [
+        "*://*.walmart.com/*"
+      ],
+      "css": [],
+      "js": [
+        "vendors.js",
+        "walmart-script.js"
+      ],
+      "run_at": "document_end",
+      "all_frames": false
+    }
+  ],
+  "options_page": "options.html",
+  "incognito": "spanning",
+  "content_security_policy": {
+    "extension_pages": "script-src 'self'; object-src 'self'"
+  },
+  "permissions": [
+    "background",
+    "activeTab",
+    "tabs",
+    "scripting",
+    "storage",
+    "unlimitedStorage",
+    "browsingData"
+  ],
+  "optional_permissions": [],
+  "host_permissions": [
+    "*://*/*"
+  ],
+  "externally_connectable": {
+    "matches": [
+      "*://*.helium10.com/*",
+      "*://__H10_PROXY_HOST__/*",
+      "http://127.0.0.1/*",
+      "http://localhost/*"
+    ]
+  }
+}
