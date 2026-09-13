@@ -11,8 +11,16 @@
   "home_path": "/library",
   "counted_paths": [],
   "counted_prefixes": [],
-  "blocked_paths": [],
-  "blocked_prefixes": [],
+  "blocked_paths": [
+    "/settings/account",
+    "/logout",
+    "/users/sign_out"
+  ],
+  "blocked_prefixes": [
+    "/settings/account",
+    "/logout",
+    "/users/sign_out"
+  ],
   "sensitive_cookies": ["_kjb_session", "_csrf_token"],
   "watchdog_triggers": [],
   "extra_cdn_domains": [
